@@ -1,0 +1,51 @@
+@import 'bootstrap';
+
+body {
+  background-color: #EBF0EB;
+}
+
+.field {
+  text-align: center;
+  margin: 20px;
+}
+
+.info-field {
+  height: 40px;
+  width: 240px;
+  font-size: 24px;
+  text-align: center;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.page-title {
+  font-size: 36px;
+  font-weight: bold;
+  margin-top: 30px;
+}
+
+.another-session-button {
+  margin-top: 20px;
+}
+
+.site-logo {
+  height: 40px;
+  width: 40px;
+  margin-left: 0;
+  padding-left: 0;
+  border: 0;
+}
+
+.required-field {
+  color: red;
+}
+
+.error-body {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px 0 2px;
+  border: 0;
+  width: 300px;
+}

@@ -1,0 +1,8 @@
+<% if resource.errors.any? %>
+  <div id="error_explanation" data-turbo-cache="false" class="alert alert-danger error-body" role="alert">
+    <p class="error-title center-text">Here is some errors occurred:</p>
+      <% resource.errors.full_messages.each do |message| %>
+      <p class="error-message center-text"><%= message %></p>
+      <% end %>
+  </div>
+<% end %>

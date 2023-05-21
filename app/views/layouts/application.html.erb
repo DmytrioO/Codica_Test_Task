@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Untitled</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag 'application', "data-turbo-track": 'reload', defer: true %>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="p-3 text-bg-dark">
+      <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+          <%= link_to root_path, class: 'd-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none' do %>
+            <img src="https://cdn-icons-png.flaticon.com/512/2622/2622392.png" class="site-logo">
+          <% end %>
+
+          <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+            <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
+            <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
+            <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
+            <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+          </ul>
+
+          <div class="text-end">
+            <% if user_signed_in? %>
+              <%= link_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn btn-outline-light me-2' %>
+              <%= link_to 'Profile', user_index_path, class: 'btn btn-warning' %>
+            <% else %>
+              <%= link_to "Log in", new_session_path(resource_name), class: 'btn btn-outline-light me-2' %>
+              <%= link_to "Sign up", new_registration_path(resource_name), class: 'btn btn-warning' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </header>
+    <%= yield %>
+  </body>
+</html>
