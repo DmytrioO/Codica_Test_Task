@@ -36,6 +36,13 @@
     </div>
 
     <div class="field">
+      <%= f.label :birthday do %>
+        <%= 'Birthday'.html_safe + content_tag(:span, '*', class: 'required-field') %>
+      <% end %><br />
+      <%= f.date_field :birthday, required: true, placeholder: '05.11.2003', class: 'info-field' %>
+    </div>
+
+    <div class="field">
       <%= f.label :password do %>
         <%= 'Password'.html_safe + content_tag(:span, '*', class: 'required-field') %>
       <% end %><br />

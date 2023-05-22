@@ -75,3 +75,9 @@ gem 'jquery-rails'
 gem 'cancancan'
 
 gem 'activeadmin'
+
+gem 'aws-sdk-s3'
+
+gem 'figaro'
+
+gem 'annotate'

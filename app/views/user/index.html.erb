@@ -1,1 +1,10 @@
-<p><%= @user.first_name %></p>
+<p>First name: <%= @user.first_name %></p>
+<p>Last name: <%= @user.last_name %></p>
+<p>Second name: <%= @user.second_name.present? ? @user.second_name : 'Empty' %></p>
+<p>Birthday: <%= @user.birthday.strftime('%d.%m.%Y') %></p>
+<img src="<%= @user.photo %>" class="profile-image">
+<form id="upload-form" action="/profile/upload-image" method="post" enctype="multipart/form-data">
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <input type="file" name="image" id="image-upload" accept="image/*">
+  <button type="button" onclick="uploadImage()">Upload Image</button>
+</form>
