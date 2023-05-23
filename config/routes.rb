@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   root 'user#index'
 
   get 'profile', to: 'user#index', as: 'user_index'
-  post '/profile/upload-image', to: 'user#create'
   put '/profile/update', to: 'user#update', as: 'user_update'
+  put '/profile/change', to: 'user#edit', as: 'user_edit'
+  put '/password/change', to: 'user_password#edit', as: 'password_edit'
+  put '/password/update', to: 'user_password#update', as: 'password_update'
 end

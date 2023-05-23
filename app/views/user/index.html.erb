@@ -1,10 +1,22 @@
-<p>First name: <%= @user.first_name %></p>
-<p>Last name: <%= @user.last_name %></p>
-<p>Second name: <%= @user.second_name.present? ? @user.second_name : 'Empty' %></p>
-<p>Birthday: <%= @user.birthday.strftime('%d.%m.%Y') %></p>
-<img src="<%= @user.photo %>" class="profile-image">
-<form id="upload-form" action="/profile/upload-image" method="post" enctype="multipart/form-data">
-  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-  <input type="file" name="image" id="image-upload" accept="image/*">
-  <button type="button" onclick="uploadImage()">Upload Image</button>
-</form>
+<table class="profile-info">
+  <tbody>
+    <tr>
+      <td><%= image_tag @user.photo, class: 'profile-image' %></td>
+      <td>
+        <p class="profile-text">First name: <%= @user.first_name %></p>
+        <p class="profile-text">Last name: <%= @user.last_name %></p>
+        <p class="profile-text">Second name: <%= @user.second_name.present? ? @user.second_name : 'Empty' %></p>
+        <p class="profile-text">Birthday: <%= @user.birthday.strftime('%d.%m.%Y') %></p>
+        <p class="profile-text">Registered in: <%= @user.created_at.strftime('%d.%m.%Y') %></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<%= button_to 'Edit profile', user_edit_path, method: :put %>
+<%= button_to 'Change password', password_edit_path, method: :put %>
+
+<% if params[:error].present? %>
+  <div class="alert alert-danger error-body" role="alert">
+    <p><%= params[:error] %></p>
+  </div>
+<% end %>

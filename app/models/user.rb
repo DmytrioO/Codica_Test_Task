@@ -12,14 +12,14 @@ class User < ApplicationRecord
 
   validates :phone, uniqueness: true, presence: true,  format: { with: PHONE_REGEX }
   validates :password, presence: true, length: { minimum: PASSWORD_MINIMUM_LENGTH }, format: { with: PASSWORD_REGEX }, 
-                       unless: :updating_photo?
+                       unless: :skip_password_validation?
   validates :first_name, :last_name, presence: true, format: { with: NAME_REGEX }
   validates :second_name, format: { with: NAME_REGEX }, allow_blank: true
   validates :birthday, presence: true
   validate :older_than_eighteen
 
-  def updating_photo?
-    photo_changed? && persisted?
+  def skip_password_validation?
+    photo_changed? && persisted? || password.blank?
   end
 
   def upload_image(image)

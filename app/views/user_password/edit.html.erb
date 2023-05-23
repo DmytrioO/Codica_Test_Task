@@ -1,0 +1,41 @@
+<%= form_with(url: password_update_path, method: :put) do |f| %>
+  <%= f.hidden_field :authenticity_token, value: form_authenticity_token %>
+
+  <div class="field">
+    <%= f.label :current_password %><br />
+    <%= f.password_field :current_password, required: true, placeholder: '123#qweQWE',
+                         pattern: '(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{6,}',
+                         title: 'Please enter a password with at least one digit, one lowercase letter, one uppercase
+                         letter, one symbol, and a minimum length of 6 characters', class: 'info-field' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :new_password %><br />
+    <%= f.password_field :new_password, required: true, placeholder: '123#qweQWE',
+                         pattern: '(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{6,}',
+                         title: 'Please enter a password with at least one digit, one lowercase letter, one uppercase
+                         letter, one symbol, and a minimum length of 6 characters', class: 'info-field' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, required: true, placeholder: '123#qweQWE', class: 'info-field' %>
+  </div>
+
+  <div class="field">
+    <%= f.submit 'Save changes', class: 'btn btn-primary' %>
+  </div>
+<% end %>
+
+<script>
+    const passwordField = document.querySelector("#user_new_password");
+    const confirmationField = document.querySelector("#user_password_confirmation");
+
+    confirmationField.addEventListener("input", () => {
+        if (passwordField.value !== confirmationField.value) {
+            confirmationField.setCustomValidity("Password confirmation does not match.");
+        } else {
+            confirmationField.setCustomValidity("");
+        }
+    });
+</script>

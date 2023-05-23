@@ -1,0 +1,41 @@
+<%= form_with(url: user_update_path, method: 'put', id: 'upload-form', local: true, multipart: true) do |f| %>
+  <%= f.hidden_field :authenticity_token, value: form_authenticity_token %>
+
+  <div class="field">
+    <%= f.label :phone %><br />
+    <%= f.phone_field :phone, placeholder: '+380000000000', value: @user.phone, pattern: '\+\d{12}',
+                      title: 'Please enter a phone number in format +38000000000', class: 'info-field' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :first_name %><br />
+    <%= f.text_field :first_name, placeholder: 'John', value: @user.first_name, pattern: '[A-Za-z]+',
+                     title: 'Please enter only english letters', class: 'info-field' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :last_name %><br />
+    <%= f.text_field :last_name, placeholder: 'Doe', value: @user.last_name, pattern: '[A-Za-z]+',
+                     title: 'Please enter only english letters', class: 'info-field' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :second_name %><br />
+    <%= f.text_field :second_name, placeholder: 'Leon', value: @user.second_name, pattern: '[A-Za-z]+',
+                     title: 'Please enter only english letters', class: 'info-field' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :birthday %><br />
+    <%= f.date_field :birthday, placeholder: '05.11.2003', value: @user.birthday, class: 'info-field' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :image %><br />
+    <%= f.file_field :image, id: 'image-upload', accept: 'image/*', class: 'btn btn-outline-success' %>
+  </div>
+
+  <div class="field">
+    <%= f.submit 'Update profile', class: 'btn btn-primary' %>
+  </div>
+<% end %>

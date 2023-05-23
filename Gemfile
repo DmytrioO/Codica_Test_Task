@@ -81,3 +81,5 @@ gem 'aws-sdk-s3'
 gem 'figaro'
 
 gem 'annotate'
+
+gem 'bcrypt'

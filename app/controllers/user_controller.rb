@@ -5,21 +5,20 @@ class UserController < ApplicationController
     @user = current_user
   end
 
-  def create
+  def update
     @user = current_user
+    @user.update(user_params)
     @user.upload_image(params[:image]) if params[:image]
     redirect_to user_index_path
   end
 
-  def update
+  def edit
     @user = current_user
-    @user.update(user_params)
-    redirect_to user_index_path
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:phone, :first_name, :last_name, :second_name, :birthday, :password)
+    params.permit(:phone, :first_name, :last_name, :second_name, :birthday, :password)
   end
 end
