@@ -1,0 +1,34 @@
+<div class="page-content">
+  <% if can? :read, @doctor %>
+    <table class="center-object">
+      <tbody>
+        <tr>
+          <td><%= image_tag @doctor.photo, class: 'profile-image' %></td>
+          <td>
+            <p class="profile-text">First name: <%= @doctor.first_name %></p>
+            <p class="profile-text">Last name: <%= @doctor.last_name %></p>
+            <p class="profile-text">
+              Second name: <%= @doctor.second_name.present? ? @doctor.second_name : 'Empty' %>
+            </p>
+            <p class="profile-text">Phone number: <%= @doctor.phone %></p>
+            <p class="profile-text">Birthday: <%= @doctor.birthday.strftime('%d.%m.%Y') %></p>
+            <p class="profile-text">Registered in: <%= @doctor.created_at.strftime('%d.%m.%Y') %></p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="access-denied">Sorry, but you can't see this page!</p>
+  <% end %>
+
+  <div class="center-text">
+    <%= link_to 'Doctors page', root_path, class: 'btn btn-primary doctor-button' %>
+    <% if @doctor.present? && user_signed_in? %>
+      <%= form_with(url: appointment_new_path, method: 'post') do |f| %>
+        <%= f.hidden_field :doctor_id, value: @doctor.id %>
+
+        <%= f.submit 'Make appointment', class: 'btn btn-success variable-button' %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="doctors-container">
+  <% @doctors.each do |doctor| %>
+    <% if doctor.category.present? %>
+      <div class="card doctor-card">
+        <%= link_to doctor_path(doctor) do%>
+          <img src="<%= doctor.photo %>" class="card-img-top doctor-photo">
+          <div class="card-body doctor-body">
+            <h5 class="card-title doctor-name"><%= doctor.full_name %></h5>
+            <div class="doctor-card-info">
+              <p class="card-text"><%= doctor.category.name.capitalize %></p>
+              <% if user_signed_in? %>
+                <%= form_with(url: appointment_new_path, method: 'post') do |f| %>
+                  <%= f.hidden_field :doctor_id, value: doctor.id %>
+
+                  <%= f.submit 'Make appointment', class: 'btn btn-success' %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

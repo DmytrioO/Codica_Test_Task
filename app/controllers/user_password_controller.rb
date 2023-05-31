@@ -3,16 +3,13 @@ class UserPasswordController < ApplicationController
 
   before_action :authenticate_user!
 
-  def edit
-    @user = current_user
-  end
+  def edit; end
 
   def update
-    @user = current_user
+    bcrypt_password = BCrypt::Password.new(current_user.encrypted_password)
 
-    bcrypt_password = BCrypt::Password.new(@user.encrypted_password)
     if bcrypt_password == params[:current_password]
-      @user.update(password: params[:new_password])
+      current_user.update(password: params[:new_password])
     else
       error = 'The current password is incorrect!'
     end

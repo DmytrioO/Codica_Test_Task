@@ -1,0 +1,37 @@
+<div class="page-content">
+  <p class="profile-text center-text">Doctor: <%= @doctor.full_name %></p>
+  <% if @step == 'time' || @step == 'submit' %>
+    <p class="profile-text center-text">Date: <%= params[:date].to_date.strftime('%d.%m') %></p>
+  <% end %>
+  <% if @step == 'submit' %>
+    <p class="profile-text center-text">Time: <%= params[:time].to_datetime.strftime('%H:%M') %></p>
+  <% end %>
+
+  <%= form_with(url: @url, method: 'post') do |f| %>
+    <%= f.hidden_field :step, value: "#{@step == 'time' ? 'submit' : 'time'}" %>
+    <%= f.hidden_field :doctor_id, value: @doctor.id %>
+    <% if @step == 'time' || @step == 'submit' %>
+      <%= f.hidden_field :date, value: params[:date] %>
+    <% end %>
+
+    <% case params[:step] %>
+    <% when 'time' %>
+      <div class="field">
+        <%= f.label :time, class: 'form-label' %><br />
+        <%= f.collection_select :time, make_time(params[:date], @doctor), :to_s, lambda { |time| time.strftime('%H:%M') },
+                                class: 'form-select appointment-select' %>
+      </div>
+    <% when 'submit' %>
+      <%= f.hidden_field :time, value: params[:time] %>
+    <% else %>
+      <div class="field">
+        <%= f.label :date, class: 'form-label' %><br />
+        <%= f.collection_select :date, make_date, :to_s, lambda { |date| date.strftime('%d.%m') },
+                                class: 'form-select appointment-select' %>
+      </div>
+    <% end %>
+    <div class="field">
+      <%= f.submit 'Submit', class: 'btn btn-primary appointment-button' %>
+    </div>
+  <% end %>
+</div>

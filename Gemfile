@@ -83,3 +83,5 @@ gem 'figaro'
 gem 'annotate'
 
 gem 'bcrypt'
+
+gem 'faker'

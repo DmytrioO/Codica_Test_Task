@@ -1,20 +1,15 @@
 class UserController < ApplicationController
   before_action :authenticate_user!
 
-  def index
-    @user = current_user
-  end
+  def index; end
 
   def update
-    @user = current_user
-    @user.update(user_params)
-    @user.upload_image(params[:image]) if params[:image]
+    current_user.update(user_params)
+    current_user.upload_image(params[:image]) if params[:image]
     redirect_to user_index_path
   end
 
-  def edit
-    @user = current_user
-  end
+  def edit; end
 
   private
 

@@ -1,19 +1,33 @@
-<table class="profile-info">
+<table class="profile-info center-object">
   <tbody>
     <tr>
-      <td><%= image_tag @user.photo, class: 'profile-image' %></td>
+      <td><%= image_tag current_user.photo, class: 'profile-image' %></td>
       <td>
-        <p class="profile-text">First name: <%= @user.first_name %></p>
-        <p class="profile-text">Last name: <%= @user.last_name %></p>
-        <p class="profile-text">Second name: <%= @user.second_name.present? ? @user.second_name : 'Empty' %></p>
-        <p class="profile-text">Birthday: <%= @user.birthday.strftime('%d.%m.%Y') %></p>
-        <p class="profile-text">Registered in: <%= @user.created_at.strftime('%d.%m.%Y') %></p>
+        <p class="profile-text">First name: <%= current_user.first_name %></p>
+        <p class="profile-text">Last name: <%= current_user.last_name %></p>
+        <p class="profile-text">
+          Second name: <%= current_user.second_name.present? ? current_user.second_name : 'Empty' %>
+        </p>
+        <p class="profile-text">Phone number: <%= current_user.phone %></p>
+        <p class="profile-text">Birthday: <%= current_user.birthday.strftime('%d.%m.%Y') %></p>
+        <p class="profile-text">Registered in: <%= current_user.created_at.strftime('%d.%m.%Y') %></p>
       </td>
     </tr>
   </tbody>
 </table>
-<%= button_to 'Edit profile', user_edit_path, method: :put %>
-<%= button_to 'Change password', password_edit_path, method: :put %>
+
+<table class="center-object profile-buttons">
+  <tbody>
+    <tr>
+      <td>
+        <%= button_to 'Edit profile', user_edit_path, method: :put, class: 'btn btn-primary edit-profile' %>
+      </td>
+      <td>
+        <%= button_to 'Change password', password_edit_path, method: :put, class: 'btn btn-primary change-password' %>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 <% if params[:error].present? %>
   <div class="alert alert-danger error-body" role="alert">

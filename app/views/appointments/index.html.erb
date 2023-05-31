@@ -1,0 +1,23 @@
+<% if @appointments.present? %>
+  <table class="center-object page-content">
+    <tbody>
+      <tr>
+        <% ['date', 'time', 'first name', 'last name', 'second name', 'phone', 'status'].each do |field| %>
+          <td><p class="center-text table-field bold-text"><%= field.capitalize %></p></td>
+        <% end %>
+      </tr>
+      <% @appointments.each do |appointment| %>
+        <tr>
+          <td><p class="center-text table-field"><%= appointment.date_time.strftime('%d.%m.%Y') %></p></td>
+          <td><p class="center-text table-field"><%= appointment.date_time.strftime('%H:%M') %></p></td>
+          <td><p class="center-text table-field"><%= appointment.return_user(current_user, params[:role]).first_name %></p></td>
+          <td><p class="center-text table-field"><%= appointment.return_user(current_user, params[:role]).last_name %></p></td>
+          <td><p class="center-text table-field"><%= appointment.return_user(current_user, params[:role]).second_name.present? ? appointment.patient.second_name : '-' %></p></td>
+          <td><p class="center-text table-field"><%= appointment.return_user(current_user, params[:role]).phone %></p></td>
+          <td><p class="center-text table-field"><%= appointment.status.capitalize %></p></td>
+          <td><%= link_to 'View', appointment_path(appointment), class: 'btn btn-info' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

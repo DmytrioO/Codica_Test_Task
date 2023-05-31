@@ -1,0 +1,23 @@
+<% if @appointment.present? %>
+  <div class="alert alert-success order-create-alert" role="alert">
+    <h1 class="main-message center-text">Appointment №<%= @appointment.id %> was successfully created!</h1>
+    <hr class="order-create-hr">
+    <h3 class="info-message center-text">You can check status of appointment on the appointment page</h3>
+  </div>
+<% else %>
+  <div class="alert alert-danger order-create-alert" role="alert">
+    <h3 class="main-message center-text"><%= @error %></h3>
+  </div>
+<% end %>
+
+<div>
+  <table class="order-create-buttons center-object">
+    <tr>
+      <td><%= link_to 'Go to doctors', root_path, class: 'btn btn-primary to-products' %></td>
+      <% if @appointment.present? %>
+        <td><%= link_to 'View this appointment', root_path, class: 'btn btn-primary to-order' %></td>
+        <td><%= link_to 'Go to my appointments', appointments_index_path, class: 'btn btn-primary to-orders' %></td>
+      <% end %>
+    </tr>
+  </table>
+</div>

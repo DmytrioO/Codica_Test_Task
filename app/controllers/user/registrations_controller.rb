@@ -8,6 +8,7 @@ class User::RegistrationsController < Devise::RegistrationsController
       resource.first_name = resource.first_name.capitalize
       resource.last_name = resource.last_name.capitalize
       resource.second_name = resource.second_name.capitalize if resource.second_name.present?
+      resource.photo = 'https://codica-test-task-bucket.s3.eu-central-1.amazonaws.com/no_image.png'
       resource.save
     end
   end

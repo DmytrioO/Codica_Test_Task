@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Untitled</title>
+    <title>Codica Task</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,33 +11,78 @@
   </head>
 
   <body>
+
     <header class="p-3 text-bg-dark">
       <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
           <%= link_to root_path, class: 'd-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none' do %>
-            <img src="https://cdn-icons-png.flaticon.com/512/2622/2622392.png" class="site-logo">
+            <%= image_tag 'https://cdn-icons-png.flaticon.com/512/2622/2622392.png', class: 'site-logo' %>
           <% end %>
 
-          <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">About</a></li>
-          </ul>
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <li><%= link_to 'Doctors', root_path, class: 'nav-link px-2 text-white' %></li>
+              <li><%= link_to 'Appointments', appointments_index_path, class: 'nav-link px-2 text-white' %></li>
+            <% if user_signed_in? and current_user.doctor? %>
+              <li>
+                <%= link_to 'Receptions', appointments_index_path(role: 'doctor'), class: 'nav-link px-2 text-white' %>
+              </li>
+            <% end %>
+            </ul>
 
           <div class="text-end">
             <% if user_signed_in? %>
               <%= link_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn btn-outline-light me-2' %>
               <%= link_to 'Profile', user_index_path, class: 'btn btn-warning' %>
             <% else %>
-              <%= link_to "Log in", new_session_path(resource_name), class: 'btn btn-outline-light me-2' %>
-              <%= link_to "Sign up", new_registration_path(resource_name), class: 'btn btn-warning' %>
+              <%= link_to "Log in", new_user_session_path, class: 'btn btn-outline-light me-2' %>
+              <%= link_to "Sign up", new_user_registration_path, class: 'btn btn-warning' %>
             <% end %>
           </div>
         </div>
       </div>
     </header>
-    <%= yield %>
+
+    <main>
+      <%= yield %>
+    </main>
+
+      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top footer">
+        <div class="col-md-4 d-flex align-items-center">
+          <span class="mb-3 mb-md-0 text-body-secondary text-bottom">Created by: Dmytro</span>
+        </div>
+
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex links-social">
+          <li class="ms-3">
+            <a class="text-body-secondary" href="https://telegram.me/vorongus" target="_blank">
+              <svg class="bi" width="24" height="24">
+                <use xlink:href="<%= asset_path('bootstrap-icons.svg') %>#telegram"></use>
+              </svg>
+            </a>
+          </li>
+          <li class="ms-3">
+            <a class="text-body-secondary" href="https://www.linkedin.com/in/dmytro-onyshchenko-987744240/"
+               target="_blank">
+              <svg class="bi" width="24" height="24">
+                <use xlink:href="<%= asset_path('bootstrap-icons.svg') %>#linkedin"></use>
+              </svg>
+            </a>
+          </li>
+          <li class="ms-3">
+            <a class="text-body-secondary" href="https://www.instagram.com/vorongus/" target="_blank">
+              <svg class="bi" width="24" height="24">
+                <use xlink:href="<%= asset_path('bootstrap-icons.svg') %>#instagram"></use>
+              </svg>
+            </a>
+          </li>
+          <li class="ms-3">
+            <a class="text-body-secondary" href="https://www.facebook.com/profile.php?id=100027089796472"
+               target="_blank">
+              <svg class="bi" width="24" height="24">
+                <use xlink:href="<%= asset_path('bootstrap-icons.svg') %>#facebook"></use>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </footer>
   </body>
 </html>

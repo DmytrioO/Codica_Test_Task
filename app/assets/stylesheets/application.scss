@@ -2,6 +2,18 @@
 
 body {
   background-color: #EBF0EB;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+main {
+  flex: 1;
 }
 
 .field {
@@ -51,7 +63,7 @@ body {
 }
 
 .profile-image {
-  max-height: 300px;
+  max-height: 320px;
   width: auto;
   margin-right: 20px;
 }
@@ -60,8 +72,195 @@ body {
   font-size: 24px;
 }
 
-.profile-info {
+.center-object {
   margin-left: auto;
   margin-right: auto;
+}
+
+.profile-info {
   margin-top: 40px;
+}
+
+.edit-profile {
+  margin-right: 10px;
+}
+
+.change-password {
+  margin-left: 10px;
+}
+
+.profile-buttons {
+  margin-top: 20px;
+}
+
+.footer {
+  bottom: 0;
+  margin-bottom: 10px !important;
+  padding-top: 20px !important;
+}
+
+.text-bottom {
+  margin-left: 80px;
+}
+
+.links-social {
+  margin-right: 80px;
+}
+
+.doctors-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.doctor-card {
+  width: 18rem;
+  height: 460px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.doctor-card-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 18rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.doctor-body {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 18rem;
+  height: 172px;
+}
+
+.doctor-name {
+  text-align: center;
+}
+
+.doctor-photo {
+  max-height: 286px;
+}
+
+.page-content {
+  margin-top: 20px;
+}
+
+.access-denied {
+  font-weight: bold;
+  font-size: 36px;
+  text-align: center;
+}
+
+.doctor-button {
+  margin-top: 20px;
+}
+
+.variable-button {
+  margin-top: 12px;
+}
+
+.card-text, .card-title, a {
+  color: black;
+  text-decoration: none;
+}
+
+.card-text {
+  padding-bottom: 10px;
+}
+
+.nav-link:hover {
+  color: #baf6d3 !important;
+}
+
+select, .appointment-select {
+  width: 100px;
+  height: 40px;
+  text-align: center;
+}
+
+.form-label {
+  margin-bottom: 8px;
+}
+
+.appointment-button {
+  margin-top: 10px;
+}
+
+.order-create-alert {
+  margin-top: 20px;
+  margin-left: 100px;
+  margin-right: 100px;
+  padding: 0;
+}
+
+.main-message {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.order-create-hr {
+  margin: 20px;
+}
+
+.info-message {
+  margin-bottom: 20px;
+}
+
+.to-order {
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 250px;
+}
+
+.to-orders {
+  margin-left: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 250px;
+}
+
+.to-products {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-right: 20px;
+  width: 250px;
+}
+
+.table-field {
+  font-size: 18px;
+  margin: 14px;
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+.appointment-card {
+  width: 300px;
+  font-size: 20px;
+}
+
+.accordion-item {
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 1000px;
+}
+
+.recommend {
+  height: 300px;
+  width: 400px;
+}
+
+.recommendations-text {
+  font-size: 24px;
 }

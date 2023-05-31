@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2023-05-25
+  time: 2023-05-25 18:15:22
+  user: one
+  doctor: one
+
+two:
+  date: 2023-05-25
+  time: 2023-05-25 18:15:22
+  user: two
+  doctor: two

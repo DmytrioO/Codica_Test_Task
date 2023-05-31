@@ -10,6 +10,14 @@ class User < ApplicationRecord
 
   enum :role, %i[patient doctor admin], default: 0
 
+  has_many :appointments_as_doctor, class_name: 'Appointment', foreign_key: :doctor_id, dependent: :destroy
+  has_many :patients, through: :appointments_as_doctor, source: :patient
+
+  has_many :appointments_as_patient, class_name: 'Appointment', foreign_key: :patient_id, dependent: :destroy
+  has_many :doctors, through: :appointments_as_patient, source: :doctor
+
+  belongs_to :category, optional: true
+
   validates :phone, uniqueness: true, presence: true,  format: { with: PHONE_REGEX }
   validates :password, presence: true, length: { minimum: PASSWORD_MINIMUM_LENGTH }, format: { with: PASSWORD_REGEX }, 
                        unless: :skip_password_validation?
@@ -34,12 +42,24 @@ class User < ApplicationRecord
     obj = bucket.object(object_key)
     obj.put(body: image.tempfile, acl: 'public-read')
 
-    update!(photo: obj.public_url)
+    update(photo: obj.public_url)
+  end
+
+  def full_name
+    full_name = [first_name, last_name]
+    full_name << second_name if second_name.present?
+    full_name.join(' ')
   end
 
   private
 
   def older_than_eighteen
+    return if birthday.blank?
+
     errors.add(:birthday, 'must be older than 18 years!') if birthday >= 18.years.ago.to_date
   end
+
+  # def set_default_photo_link
+  #   update(photo: 'https://codica-test-task-bucket.s3.eu-central-1.amazonaws.com/no_image.png')
+  # end
 end
