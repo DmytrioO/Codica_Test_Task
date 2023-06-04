@@ -8,7 +8,7 @@ class User < ApplicationRecord
   NAME_REGEX = /\A[a-zA-Z]+\z/
   PASSWORD_REGEX = /\A(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/
 
-  enum :role, %i[patient doctor admin], default: 0
+  enum :role, %i[patient doctor], default: 0
 
   has_many :appointments_as_doctor, class_name: 'Appointment', foreign_key: :doctor_id, dependent: :destroy
   has_many :patients, through: :appointments_as_doctor, source: :patient
@@ -18,12 +18,11 @@ class User < ApplicationRecord
 
   belongs_to :category, optional: true
 
-  validates :phone, uniqueness: true, presence: true,  format: { with: PHONE_REGEX }
+  validates :phone, uniqueness: true, presence: true, format: { with: PHONE_REGEX }
   validates :password, presence: true, length: { minimum: PASSWORD_MINIMUM_LENGTH }, format: { with: PASSWORD_REGEX }, 
                        unless: :skip_password_validation?
   validates :first_name, :last_name, presence: true, format: { with: NAME_REGEX }
   validates :second_name, format: { with: NAME_REGEX }, allow_blank: true
-  validates :birthday, presence: true
   validate :older_than_eighteen
 
   def skip_password_validation?
@@ -58,8 +57,4 @@ class User < ApplicationRecord
 
     errors.add(:birthday, 'must be older than 18 years!') if birthday >= 18.years.ago.to_date
   end
-
-  # def set_default_photo_link
-  #   update(photo: 'https://codica-test-task-bucket.s3.eu-central-1.amazonaws.com/no_image.png')
-  # end
 end

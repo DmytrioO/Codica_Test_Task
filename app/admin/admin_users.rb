@@ -4,21 +4,17 @@ ActiveAdmin.register AdminUser do
   index do
     selectable_column
     id_column
-    column :email
-    column :current_sign_in_at
-    column :sign_in_count
+    column :phone
     column :created_at
     actions
   end
 
-  filter :email
-  filter :current_sign_in_at
-  filter :sign_in_count
+  filter :phone
   filter :created_at
 
   form do |f|
     f.inputs do
-      f.input :email
+      f.input :phone
       f.input :password
       f.input :password_confirmation
     end

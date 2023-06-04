@@ -19,4 +19,6 @@ require 'faker'
 #               birthday:, category: categories[number], photo: 'https://codica-test-task-bucket.s3.eu-central-1.amazonaws.com/no_image.png')
 # end
 
-AdminUser.create!(phone: '+380975553869', password: 'password', password_confirmation: 'password') if Rails.env.development?
+if Rails.env.development?
+  AdminUser.create!(phone: '+380975553869', password: 'password', password_confirmation: 'password')
+end
