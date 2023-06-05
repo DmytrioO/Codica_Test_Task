@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :bigint           not null, primary key
+#  encrypted_password     :string           default(""), not null
+#  reset_password_token   :string
+#  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
+#  phone                  :string
+#  first_name             :string
+#  last_name              :string
+#  second_name            :string
+#  role                   :integer
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  birthday               :date             not null
+#  photo                  :string
+#  category_id            :bigint
+#
 class User < ApplicationRecord
   include Constantable
 
