@@ -6,13 +6,13 @@ class ConclusionsController < ApplicationController
   def create
     @appointment = Appointment.find(params[:appointment_id])
 
-    if can? :create, Conclusion
-      if @appointment.conclusion.nil?
-        Conclusion.create(recommendations: params[:recommendations], appointment: @appointment)
-        @appointment.update(status: 'closed')
-      end
+    return unless can? :create, Conclusion
 
-      redirect_to @appointment
+    if @appointment.conclusion.nil?
+      Conclusion.create(recommendations: params[:recommendations], appointment: @appointment)
+      @appointment.update(status: 'closed')
     end
+
+    redirect_to @appointment
   end
 end

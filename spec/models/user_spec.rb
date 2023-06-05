@@ -13,8 +13,8 @@ RSpec.describe User, type: :model do
       phone = "+380#{Faker::Number.number(digits: 9)}"
       full_name = Faker::FunnyName.name.split(' ')
       birthday = Faker::Date.birthday(min_age: 18, max_age: 65)
-      test_user = User.create(phone:, first_name: full_name.first, last_name: full_name.last,
-                              birthday:, photo: 'https://codica-test-task-bucket.s3.eu-central-1.amazonaws.com/no_image.png')
+      test_user = User.create(phone:, first_name: full_name.first, last_name: full_name.last, birthday:,
+                              photo: 'https://codica-test-task-bucket.s3.eu-central-1.amazonaws.com/no_image.png')
       user = User.new(phone: test_user.phone)
       expect(user).not_to be_valid
       expect(user.errors[:phone]).to include("has already been taken")

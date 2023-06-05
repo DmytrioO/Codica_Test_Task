@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   helper_method %i[make_date make_time]
   def make_date
     array = []
-    date = if DateTime.now < '18:00'.to_datetime
+    date = if DateTime.now < DateTime.parse("#{Date.today} 18:00 +0300")
              Date.today
            else
              Date.tomorrow
@@ -14,31 +14,24 @@ class ApplicationController < ActionController::Base
   end
 
   def make_time(date, doctor)
-    end_time = DateTime.parse("#{date} 18:00")
+    end_time = DateTime.parse("#{date} 18:00 +0300")
     array = []
 
     if date.to_date == Date.today
-      current_time = (Time.at((Time.now.to_f / 15.minutes).round * 15.minutes)).to_datetime
+      current_time = Time.at((Time.now.to_f / 15.minutes).round * 15.minutes).to_datetime
       current_time += 15.minutes if current_time <= DateTime.now
     else
-      current_time = DateTime.parse("#{date} 08:00")
+      current_time = DateTime.parse("#{date} 08:00 +0300")
     end
 
     while current_time <= end_time
-      if doctor.appointments_as_doctor.find_by(date_time: "#{date} #{current_time.strftime('%H:%M')}").nil?
+      if doctor.appointments_as_doctor.where('date_time = ? AND (status = ? OR status = ?)', DateTime
+        .parse(current_time.strftime('%d.%m.%Y %H:%M +0000')), 0, 1).empty?
         array << current_time
       end
       current_time += 15.minutes
     end
 
     array
-  end
-
-  def authenticate_admin!
-    redirect_to root_path unless current_user&.admin?
-  end
-
-  def current_admin_user
-    current_user if current_user&.admin?
   end
 end

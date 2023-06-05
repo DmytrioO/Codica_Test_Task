@@ -2,22 +2,25 @@ require 'rails_helper'
 require 'capybara/rails'
 
 RSpec.feature 'Making a conclusion', type: :feature do
-  phone = "+380#{Faker::Number.number(digits: 9)}"
-  full_name = Faker::FunnyName.name.split(' ')
-  birthday = Faker::Date.birthday(min_age: 18, max_age: 65)
-  password = '123#QWEqwe'
-  doctor = User.create(phone:, first_name: full_name.first, last_name: full_name.last,
-                       birthday:, role: 'doctor', password:)
-
-  phone = "+380#{Faker::Number.number(digits: 9)}"
-  full_name = Faker::FunnyName.name.split(' ')
-  birthday = Faker::Date.birthday(min_age: 18, max_age: 65)
-  patient = User.create(phone:, first_name: full_name.first, last_name: full_name.last,
-                        birthday:, photo: 'https://codica-test-task-bucket.s3.eu-central-1.amazonaws.com/no_image.png')
-
-  appointment = Appointment.create(doctor:, patient:, date_time: DateTime.now, status: 'in_progress')
+  Conclusion.destroy_all
+  Appointment.destroy_all
 
   scenario 'Doctor successfully let a conclusion for patient' do
+    phone = "+380#{Faker::Number.number(digits: 9)}"
+    full_name = Faker::FunnyName.name.split(' ')
+    birthday = Faker::Date.birthday(min_age: 18, max_age: 65)
+    password = '123#QWEqwe'
+    doctor = User.create(phone:, first_name: full_name.first, last_name: full_name.last,
+                         birthday:, role: 'doctor', password:)
+
+    phone = "+380#{Faker::Number.number(digits: 9)}"
+    full_name = Faker::FunnyName.name.split(' ')
+    birthday = Faker::Date.birthday(min_age: 18, max_age: 65)
+    patient = User.create(phone:, first_name: full_name.first, last_name: full_name.last, birthday:,
+                          photo: 'https://codica-test-task-bucket.s3.eu-central-1.amazonaws.com/no_image.png')
+
+    appointment = Appointment.create(doctor:, patient:, date_time: DateTime.now, status: 'in_progress')
+
     visit new_user_session_path
 
     fill_in 'Phone', with: doctor.phone
@@ -41,5 +44,7 @@ RSpec.feature 'Making a conclusion', type: :feature do
 
     Appointment.last.conclusion.destroy
     Appointment.last.destroy
+    doctor.destroy
+    patient.destroy
   end
 end

@@ -15,7 +15,7 @@
     <tr>
       <td><%= link_to 'Go to doctors', root_path, class: 'btn btn-primary to-products' %></td>
       <% if @appointment.present? %>
-        <td><%= link_to 'View this appointment', root_path, class: 'btn btn-primary to-order' %></td>
+        <td><%= link_to 'View this appointment', @appointment, class: 'btn btn-primary to-order' %></td>
         <td><%= link_to 'Go to my appointments', appointments_index_path, class: 'btn btn-primary to-orders' %></td>
       <% end %>
     </tr>

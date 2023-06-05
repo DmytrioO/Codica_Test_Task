@@ -44,7 +44,8 @@ ActiveAdmin.register User, as: 'Doctor' do
 
   controller do
     after_create do |user|
-      user.update(role: :doctor)
+      user.update(role: :doctor, password: '123#QWEqwe',
+                  photo: 'https://codica-test-task-bucket.s3.eu-central-1.amazonaws.com/no_image.png')
     end
   end
 end

@@ -1,5 +1,6 @@
 class AppointmentsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_appointment, only: %i[show update]
   before_action :set_doctor, only: %i[new create]
 
   def index
@@ -11,9 +12,7 @@ class AppointmentsController < ApplicationController
     @appointments = @appointments.where(status: params[:status]) if params[:status]
   end
 
-  def show
-    @appointment = Appointment.find_by(id: params[:id])
-  end
+  def show; end
 
   def new
     @step = params[:step]
@@ -22,42 +21,40 @@ class AppointmentsController < ApplicationController
 
   def create
     if params[:doctor_id].to_i == current_user.id
-      head :unprocessable_entity
       return @error = "You can't make appointment where patient and doctor are the same person!"
     end
 
     if @doctor.appointments_as_doctor.where('status = ? OR status = ?', 0, 1).count >= 10
-      head :unprocessable_entity
       return @error = "Sorry, but you can't make appointment to this doctor, because he/her have maximum
 appointments for now!"
     end
 
     date_time = DateTime.parse("#{params[:date]} #{params[:time].to_datetime.strftime('%H:%M')}")
 
-    if @doctor.appointments_as_doctor.find_by(date_time: date_time).present?
-      head :unprocessable_entity
+    if @doctor.appointments_as_doctor.where('date_time = ? AND (status = ? OR status = ?)', date_time, 0, 1).present?
       return @error = 'Sorry, but this time already in use!'
     end
 
     @appointment = Appointment.create(date_time:, doctor_id: params[:doctor_id], patient: current_user)
 
-    unless @appointment.save
-      head :internal_server_error
-      @appointment = nil
-      @error = 'Something went wrong! Try one more time!'
-    end
+    return if @appointment.save
+
+    @appointment = nil
+    @error = 'Something went wrong! Try one more time!'
   end
 
   def update
-    @appointment = Appointment.find(params[:id])
+    return unless can? :edit, @appointment
 
-    if can? :edit, @appointment
-      @appointment.update(status: params[:status])
-      redirect_to @appointment
-    end
+    @appointment.update(status: params[:status])
+    redirect_to @appointment
   end
 
   private
+
+  def set_appointment
+    @appointment = Appointment.find_by(id: params[:id])
+  end
 
   def set_doctor
     @doctor = User.find(params[:doctor_id])

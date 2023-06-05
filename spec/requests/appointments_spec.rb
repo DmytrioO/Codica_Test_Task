@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'Appointments', type: :request do
   describe 'POST appointment/create' do
-    Appointment.all.destroy_all
+    Conclusion.destroy_all
+    Appointment.destroy_all
 
     phone = "+380#{Faker::Number.number(digits: 9)}"
     full_name = Faker::FunnyName.name.split(' ')
@@ -33,14 +34,14 @@ RSpec.describe 'Appointments', type: :request do
 
       post appointment_create_path, params: { doctor_id: doctor.id, date: Date.today, time: DateTime.now }
 
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(200)
 
       expect(Appointment.last).to eq(nil)
     end
 
     it 'prevents a user from creating an appointment with a doctor with maximum number of appointments' do
       10.times do |number|
-        Appointment.create(doctor:, patient:, date_time: DateTime.now + (number * 2).minutes )
+        Appointment.create(doctor:, patient:, date_time: DateTime.now + (number * 2).minutes)
       end
 
       sign_in patient
@@ -48,7 +49,9 @@ RSpec.describe 'Appointments', type: :request do
       post appointment_create_path, params: { doctor_id: doctor.id, date: Date.tomorrow, time: DateTime.now,
                                               patient: }
 
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(200)
+
+      expect(Appointment.all.count).to eq(10)
 
       doctor.appointments_as_doctor.destroy_all
     end
@@ -63,11 +66,26 @@ RSpec.describe 'Appointments', type: :request do
       post appointment_create_path, params: { doctor_id: doctor.id, date: date_time.to_date, time: date_time,
                                               patient: }
 
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(200)
 
       expect(Appointment.all.count).to eq(1)
 
       appointment.destroy
+    end
+
+    it 'let user to create appointment at the same time as canceled appointment' do
+      date_time = DateTime.now.strftime('%d.%m.%Y %H:%M').to_datetime
+
+      Appointment.create(patient:, doctor:, date_time:, status: 'canceled')
+
+      sign_in patient
+
+      post appointment_create_path, params: { doctor_id: doctor.id, date: date_time.to_date, time: date_time,
+                                              patient: }
+
+      expect(response).to have_http_status(200)
+
+      expect(Appointment.all.count).to eq(2)
     end
   end
 end

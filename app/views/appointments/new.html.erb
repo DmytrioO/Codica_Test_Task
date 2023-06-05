@@ -18,8 +18,8 @@
     <% when 'time' %>
       <div class="field">
         <%= f.label :time, class: 'form-label' %><br />
-        <%= f.collection_select :time, make_time(params[:date], @doctor), :to_s, lambda { |time| time.strftime('%H:%M') },
-                                class: 'form-select appointment-select' %>
+        <%= f.collection_select :time, make_time(params[:date], @doctor), :to_s,
+                                lambda { |time| time.strftime('%H:%M') }, class: 'form-select appointment-select' %>
       </div>
     <% when 'submit' %>
       <%= f.hidden_field :time, value: params[:time] %>
